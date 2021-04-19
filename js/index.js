@@ -1,3 +1,5 @@
+import Round from './results.class.js';
+
 const buttonPlayer1 = document.querySelector("#play-1");
 const buttonPlayer2 = document.querySelector("#play-2");
 
@@ -9,21 +11,51 @@ const playAgain = document.querySelector("#play-again");
 let cards = [];
 let resultPlayer1 = 0;
 let resultPlayer2 = 0;
-let val = 0;
+let score;
+let deck = [];
+let naipe = [];
+let val = [];
 
 playAgain.addEventListener("click", function(){
   location.reload();
 });
 
+  
+ 
+  
+  function resultGame() {
+
+    cards.map(function (valor, indice, array){
+      if (indice % 2 === 0){
+        deck.push(valor);
+      } else {
+        naipe.push(valor.trim())
+      }
+    })
+  }
+  
 
 buttonPlayer1.addEventListener("click", function(){
 
   playGame();
   cardsPlayer1.innerHTML = cards.join('');
-  cards = [];
-  resultPlayer1 = val;
+  resultGame();
+  // console.log(deck)
+  // console.log(naipe)
+  // console.log(val);
+
+  score = new Round(naipe, val);
+  //console.log(score);
+  resultPlayer1 = score.result();
   console.log(resultPlayer1);
-  val = 0;
+
+
+  cards = [];
+  score = null;
+  val = [];
+  deck = [];
+  naipe = [];
+  
 
 
   buttonPlayer1.setAttribute("disabled", true)
@@ -37,15 +69,27 @@ buttonPlayer2.addEventListener("click", function(){
   playGame();
   cardsPlayer2.innerHTML = cards.join('');
   resultGame();
-  cards = [];
-  resultPlayer2 = val;
+  //console.log(deck)
+  //console.log(naipe)
+  score = new Round(naipe, deck, val); 
+  //console.log(score);
+  resultPlayer2 = score.result();
   console.log(resultPlayer2);
-  val = 0;
 
-  if(resultPlayer2 > resultPlayer1){
-    results.innerHTML = 'Player 2 Wins ! Carta mais alta'
+
+  cards = [];
+  score = null;
+  val = [];
+  deck = [];
+  naipe = [];
+  
+
+
+  if(resultPlayer1 > resultPlayer2){
+    results.innerHTML = 'Player 1 Wins !'
   } else {
-    'Player 1 Wins ! Carta mais alta';
+    results.innerHTML = 'Player 2 Wins !';
+    return;
   }
 
   buttonPlayer2.setAttribute("disabled", true)
@@ -54,13 +98,15 @@ buttonPlayer2.addEventListener("click", function(){
 });
 
 
+
 function playGame() {
-  
-  
+
+
   for(let i = 0; i < 5; i++){
-    let num = 2 + Math.floor(Math.random() * 13)
+   
+    let num = 2 + Math.floor(Math.random() * 13);
     let naipes = ['D ', 'H ', 'S ', 'C '];
-    val += num;
+    val.push(num);
 
     if(num === 10) {
       num = 'T'
@@ -73,122 +119,13 @@ function playGame() {
     } else if(num === 14) {
       num = 'A';
     }
+  
 
     cards.push(num);
     cards.push(naipes[Math.round(Math.random() * 3)]);
   }
-  
-
     
+
     console.log(cards.join(''));
-    return cards;
-}
-
-let deck = [];
-let deckLevelCard = 0;
-let naipe = [];
-let naipeLevelCard = 0;
-let score = 0;
-
-function resultGame() {
-  cards.map(function (valor, indice, array){
-    if (indice % 2 === 0){
-      deck.push(valor);
-    } else {
-      naipe.push(valor.trim())
-    }
-  })
-}
-
-//Finish
-function isRoyalFlush(){
-  let royalFlush;
-
-
-    if(deck.toString() === 'TJQKA'){
-      royalFlush++
-    };
-
-    for (let j = naipe.length; j > 0; j--) {
-      if(naipe[j] === naipe[j-1]){
-        royalFlush++
-    }
-  }
-
-  if(royalFlush === 6){
-    score += 60;
-  }
-}
-
-//Finish
-function isFlush(){
-  let flush;
-
-  for (let i = 0; i < naipe.length; i++) {
-    if(naipe[i] === naipe[i+1]){
-      flush++
-    }
-  }
-
-  if(flush === 5){
-    return score += 40;
-  }
-  return;
-}
-
-//Finish
-function isQuadra(){
-  let quadra;
-    
-  for (let i = 0; i < deck.length; i++) {
-    if(deck[i] === deck[i+1]){
-      quadra++
-    };
-  }
-
-  if(quadra === 4){
-    return score += 50;
-  }
-  
-  return
-
-}
-
-//Finish
-function isStraight() {
-  let straight;
-
-  for (let i = 0; i < deck.length; i++) {
-    if(deck[i] === deck[i+1]){
-      straight++
-    };
-  }
-
-  if(straight === 5){
-    return score += 35;
-  }
-
-  return;
-}
-
-//Finish
-function isStraightFlush() {
-  let straightDeck;
-  let straightNaipe;
-
-  for (let i = 0; i < deck.length; i++) {
-    if(deck[i] === deck[i+1]){
-      straightDeck++
-    };
-    for (let j = naipe.length; j > 0; j--) {
-      if(naipe[j] === naipe[j-1]){
-        straightNaipe++
-    }
-  }
-  }
-
-  if(straightDeck === 5 && straightNaipe === 5){
-    return score += 55;
-  }
-  return;
+    return;
 }
