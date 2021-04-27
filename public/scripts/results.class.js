@@ -1,10 +1,11 @@
+
 export default class Round {
   constructor(naipe, deck){
     this.naipe = naipe;
     this.deck = deck;
   }
 
-  //Finish
+  //Finish working
   isHightCard(){
 
   for (let i = 0; i < this.deck.length; i++) {
@@ -15,17 +16,19 @@ export default class Round {
     return val;
   }
 
-  //Finish
+  //Finish working
   isPar(){
     let par = 0;
 
     for (let i = 0; i < this.deck.length; i++) {
-      //Adicionar mais um for
-      if(this.deck[i] === this.deck[i+1]){
-        par++
+      for (let j = 4;  j >= i + 1; j--) {
+        if(this.deck[i] === this.deck[j]){
+          par++
+        }
       }
     }
-
+    
+    console.log("isPar", par)
     if(par >= 1){
       return true;
     } else { 
@@ -35,41 +38,47 @@ export default class Round {
   }
 
   //Finish
-  // isFullHouse() {
-  //   if(isTrinca() && isPar()){
-  //     return true;
-  //   }
-  // }
+  isFullHouse() {
+    if(isTrinca() && isPar()){
+      return true;
+    }
+  }
 
-  // isTwoPar(){
-  //   let par;
+  isTwoPar(){
+    let par;
 
-  //   for (let i = 0; i < this.deck.length; i++) {
-  //     if(this.deck[i] === this.deck[i+1]){
-  //       par++
-  //     }
-  //     for(let j = this.deck.length; j > 0; j--){
-  //       if(this.deck[j] === this.deck[j-1]){
-  //         par++
-  //       }
-  //     }
-  //   }
+    for (let i = 0; i < this.deck.length; i++) {
+      if(this.deck[i] === this.deck[i+1]){
+        par++
+      }
+      for(let j = this.deck.length; j > 0; j--){
+        if(this.deck[j] === this.deck[j-1]){
+          par++
+        }
+      }
+    }
 
-  //   if(par === 4){
-  //     return true;
-  //   }
-  // }
+    if(par === 4){
+      return true;
+    }
+  }
 
   //Finish
   isTrinca(){
   
-    let trinca;
+    let trinca = [];
 
     for (let i = 0; i < this.deck.length; i++) {
-      if(this.deck[i] === this.deck[i+1]){
-        trinca++
+      for (let j = 0; j < this.deck.length; j++) {
+        if(this.deck[i] === this.deck[j+1]){
+          trinca.push(this.deck[i]);
+        }
       }
+      
     }
+
+    //console.log(trinca);
+
     if(trinca >= 2){
       return true;
     } else {
@@ -165,8 +174,8 @@ export default class Round {
     }
 
     result(){
-      console.log(this.deck);
-      console.log(this.naipe);
+      //console.log(this.deck);
+      //console.log(this.naipe);
       // console.log("isHitghtCard", this.isHightCard());
       console.log("isPar",this.isPar())
       console.log("isQuadra",this.isQuadra())
