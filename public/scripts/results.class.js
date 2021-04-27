@@ -1,8 +1,8 @@
 
 export default class Round {
-  constructor(naipe, deck){
+  constructor(naipe, val){
     this.naipe = naipe;
-    this.deck = deck;
+    this.deck = val;
   }
 
   //Finish working
@@ -29,13 +29,36 @@ export default class Round {
     }
     
     console.log("isPar", par)
-    if(par >= 1){
+    if(par === 1){
       return true;
     } else { 
       return false;
     }
 
   }
+
+    //Finish working
+    isTrinca(){
+  
+      let trinca = 0;
+  
+      for (let i = 0; i < this.deck.length; i++) {
+        for (let j = 4;  j >= i + 1; j--) {
+          if(this.deck[i] === this.deck[j]){
+            trinca++
+          }
+        }
+      }
+  
+      console.log("isTrinca", trinca);
+  
+      if(trinca > 2){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  
 
   //Finish
   isFullHouse() {
@@ -44,47 +67,28 @@ export default class Round {
     }
   }
 
+
+  //Finish working 
   isTwoPar(){
-    let par;
+    let twoPar = 0;
 
     for (let i = 0; i < this.deck.length; i++) {
-      if(this.deck[i] === this.deck[i+1]){
-        par++
-      }
-      for(let j = this.deck.length; j > 0; j--){
-        if(this.deck[j] === this.deck[j-1]){
-          par++
+      for (let j = 4;  j >= i + 1; j--) {
+        if(this.deck[i] === this.deck[j]){
+          twoPar++
         }
       }
     }
-
-    if(par === 4){
+    
+    console.log("twoPar", twoPar)
+    if(twoPar === 2){
       return true;
-    }
-  }
-
-  //Finish
-  isTrinca(){
-  
-    let trinca = [];
-
-    for (let i = 0; i < this.deck.length; i++) {
-      for (let j = 0; j < this.deck.length; j++) {
-        if(this.deck[i] === this.deck[j+1]){
-          trinca.push(this.deck[i]);
-        }
-      }
-      
-    }
-
-    //console.log(trinca);
-
-    if(trinca >= 2){
-      return true;
-    } else {
+    } else { 
       return false;
     }
+
   }
+
 
   //Finish
   isRoyalFlush(){
@@ -177,6 +181,7 @@ export default class Round {
       //console.log(this.deck);
       //console.log(this.naipe);
       // console.log("isHitghtCard", this.isHightCard());
+      console.log("twoPar",this.isTwoPar())
       console.log("isPar",this.isPar())
       console.log("isQuadra",this.isQuadra())
       console.log("isStraight",this.isStraight())

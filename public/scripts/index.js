@@ -16,6 +16,9 @@ let deck = [];
 let naipe = [];
 let val = [];
 
+let valDebug = [4, 4, 1, 2, 2];
+let naipeDebug = ["D", "D", "D", "D", "D"];
+
 playAgain.addEventListener("click", function(){
   location.reload();
 });
@@ -40,11 +43,10 @@ buttonPlayer1.addEventListener("click", function(){
   playGame();
   cardsPlayer1.innerHTML = cards.join('');
   resultGame();
-  // console.log(deck)
-  // console.log(naipe)
-  // console.log(val);
+  console.log(valDebug);
+  console.log(naipeDebug);
 
-  score = new Round(naipe, val);
+  score = new Round(naipeDebug, valDebug);
   //console.log(score);
   resultPlayer1 = score.result();
   console.log(resultPlayer1);
@@ -69,9 +71,9 @@ buttonPlayer2.addEventListener("click", function(){
   playGame();
   cardsPlayer2.innerHTML = cards.join('');
   resultGame();
-  //console.log(deck)
-  //console.log(naipe)
-  score = new Round(naipe, deck, val); 
+  console.log(naipeDebug);
+  console.log(valDebug);
+  score = new Round(naipeDebug, valDebug); 
   //console.log(score);
   resultPlayer2 = score.result();
   console.log(resultPlayer2);
@@ -124,7 +126,6 @@ function playGame() {
     cards.push(num);
     cards.push(naipes[Math.round(Math.random() * 3)]);
   }
-    
 
     console.log(cards.join(''));
     return;
